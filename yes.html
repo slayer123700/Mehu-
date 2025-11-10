@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Slayer 💖 Mehu</title>
+
+    <link rel="stylesheet" href="./style.css" />
+  
+<!-- Injected romantic glowing hearts CSS -->
+<style>
+/* full-screen heart background */
+#mehu-hearts-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: radial-gradient(circle at 10% 10%, rgba(255,230,240,0.15), transparent 15%),
+              radial-gradient(circle at 90% 90%, rgba(255,240,230,0.12), transparent 20%);
+}
+.heart {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transform: rotate(-45deg);
+  opacity: 0.9;
+  animation: floatUp linear infinite;
+}
+.heart:before, .heart:after{
+  content: "";
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle at 30% 30%, rgba(255,200,220,0.95), rgba(255,150,200,0.85));
+  border-radius: 50%;
+}
+.heart:before { top: -12px; left: 0; }
+.heart:after { left: 12px; top: 0; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(-45deg) scale(0.7); opacity:0; }
+  10% { opacity:0.9; }
+  100% { transform: translateY(-120vh) rotate(-45deg) scale(1.2); opacity:0; }
+}
+
+/* Overlay card for proposal */
+#mehu-overlay {
+  position: fixed;
+  z-index: 9999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+  max-width: 420px;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+#mehu-overlay h1 {
+  margin: 0 0 12px 0;
+  font-size: 22px;
+  letter-spacing: 0.2px;
+}
+#mehu-overlay p { margin: 0 0 18px 0; color: #333; font-size:16px; }
+.mehu-btn {
+  padding: 10px 18px;
+  font-size: 15px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin: 6px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+}
+#mehu-yes { background: linear-gradient(90deg,#ff9bb3,#ff5e9e); color: white; }
+#mehu-no { background: linear-gradient(90deg,#fff6f8,#ffeef2); color: #d33; position: relative; }
+
+.mehu-small {
+  margin-top:10px;
+  font-size:12px;
+  color:#666;
+}
+
+/* subtle page title glow */
+.mehu-title-glow {
+  text-align:center;
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9998;
+  font-weight:700;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  color: #ff2d88;
+  text-shadow: 0 4px 18px rgba(255,80,150,0.25);
+}
+</style>
+
+</head>
+  <body>
+    <div class="container">
+      <div
+        class="tenor-gif-embed"
+        data-postid="253027946666209433"
+        data-share-method="host"
+        data-aspect-ratio="1.37853"
+        data-width="100%"
+      >
+        <a
+          href="https://tenor.com/view/mochi-cat-mochi-and-goma-goma-and-peach-mochi-mochi-peach-cat-gif-gif-253027946666209433"
+          >Mochi Cat GIF</a
+        >from <a href="https://tenor.com/search/mochi-gifs">Mochi GIFs</a>
+      </div>
+      <script
+        type="text/javascript"
+        async
+        src="https://tenor.com/embed.js"
+      ></script>
+      <h1>Hehehehe, I knew it! Love you a lot 😘</h1>
+    </div>
+  
+<!-- Injected hearts, audio, and button logic -->
+<div id="mehu-hearts-bg"></div>
+<div class="mehu-title-glow">Slayer 💖 Mehu</div>
+<div id="mehu-overlay" aria-live="polite">
+  <h1>Will you be mine, Mehu?</h1>
+  <p>I've been waiting to ask... please say yes 💞</p>
+  <div>
+    <button id="mehu-yes" class="mehu-btn">Yes</button>
+    <button id="mehu-no" class="mehu-btn">No</button>
+  </div>
+  <div class="mehu-small">Click "Yes" to see a sweet message ✨</div>
+</div>
+
+<!-- Autoplaying romantic audio (soft piano) -->
+<audio id="mehu-audio" autoplay loop>
+  <source src="mehu-romantic.mp3" type="audio/mpeg">
+  <!-- fallback text -->
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+(function(){
+  // create floating hearts
+  const bg = document.getElementById('mehu-hearts-bg');
+  function makeHeart(){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    const size = 14 + Math.random()*40;
+    h.style.width = size + 'px';
+    h.style.height = size + 'px';
+    h.style.left = Math.random()*100 + '%';
+    h.style.bottom = (-10 - Math.random()*40) + 'px';
+    h.style.opacity = 0;
+    h.style.animationDuration = (8 + Math.random()*8) + 's';
+    bg.appendChild(h);
+    // remove after animation
+    setTimeout(()=> h.remove(), 18000);
+  }
+  setInterval(makeHeart, 700);
+  for(let i=0;i<10;i++) makeHeart();
+
+  // No button runs away
+  const noBtn = document.getElementById('mehu-no');
+  const yesBtn = document.getElementById('mehu-yes');
+  const overlay = document.getElementById('mehu-overlay');
+
+  function moveNo(){
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+    const ow = overlay.offsetWidth;
+    const oh = overlay.offsetHeight;
+    // random position within viewport, keep it visible
+    const x = Math.random() * (vw - 140);
+    const y = Math.random() * (vh - 100);
+    noBtn.style.transform = 'translate(' + (x - (vw/2 - ow/2)) + 'px,' + (y - (vh/2 - oh/2)) + 'px)';
+  }
+  noBtn.addEventListener('mouseenter', moveNo);
+  noBtn.addEventListener('click', moveNo);
+
+  // Yes button shows sweet message and plays a short melody
+  yesBtn.addEventListener('click', function(){
+    const audio = document.getElementById('mehu-audio');
+    try { audio.volume = 0.8; } catch(e){}
+    alert('Yay! I love you too, Mehu 💖');
+    // add a confetti-like hearts burst
+    for(let i=0;i<30;i++){
+      setTimeout(()=> {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        const size = 8 + Math.random()*26;
+        h.style.width = size + 'px';
+        h.style.height = size + 'px';
+        h.style.left = (50 + (Math.random()-0.5)*40) + '%';
+        h.style.bottom = (40 + Math.random()*20) + 'px';
+        h.style.animationDuration = (3 + Math.random()*3) + 's';
+        document.body.appendChild(h);
+        setTimeout(()=> h.remove(), 5000);
+      }, i*30);
+    }
+  });
+
+  // make title blink softly
+  const title = document.querySelector('.mehu-title-glow');
+  setInterval(()=> {
+    title.style.opacity = (title.style.opacity == '0.6' ? '1' : '0.6');
+  }, 1400);
+
+})();
+</script>
+
+</body>
+</html>
